@@ -162,9 +162,26 @@ function addProductItem(product) {
 }
 
 function setMyprice() {
-    /**
-     * 숙제! myprice 값 설정하기.
-     * 1. id가 myprice 인 input 태그에서 값을 가져온다.
+    /* 1. id가 myprice 인 input 태그에서 값을 가져온다.
+    * 숙제! myprice 값 설정하기.*/
+    let myprice = $('#myprice').val();
+    if (myprice == '') {
+        alert("속히 가격을 입력하라");
+        return;
+        }
+
+    $.ajax({
+        type: "PUT",
+        url: `/api/products/${targetId}`,
+        contentType: "application/json",
+        data: JSON.stringify({myprice: myprice}),
+        success: function (response){
+            $('#container').removeClass('active');
+            alert("가격을 입력했구나 잘했다");
+            window.location.reload();
+        }
+    })
+    /**`/api/search?query=${query}`,
      * 2. 만약 값을 입력하지 않았으면 alert를 띄우고 중단한다.
      * 3. PUT /api/product/${targetId} 에 data를 전달한다.
      *    주의) contentType: "application/json",
